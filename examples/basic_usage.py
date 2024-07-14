@@ -2,9 +2,9 @@ from xdataforge import XDataForge
 
 
 def main():
-    client = XDataForge(base_url="http://localhost:8081", token="sk_wkOQkZSniwQdtMVAAxTFp9JxOxviEFsP", )
+    client = XDataForge(base_url="http://39.105.188.185:8081", token="sk_LuCzQrjA0KRbakKYySc6QTiEp5gTUhN2", )
     # setup client, fetch or create run
-    client.setup("Eleanor Test Project", "23434", run_id="RUN-1719836666-0z8f2J")
+    client.setup("Advanced Generation for Arithmetic Expressions", "Regression Test",run_id="RUN-1720945462-Ryr5rT")
     print(client.run_id)
     # fetch tasks
     tasks = client.fetch_tasks()
@@ -14,7 +14,7 @@ def main():
     for datapoint in task.fetch_next_datapoint():
         print(datapoint)
         # process
-        task.commit_result("test")
+        task.commit_result({"output":"test"})
 
 if __name__ == "__main__":
     main()
