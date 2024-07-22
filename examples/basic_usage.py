@@ -2,7 +2,7 @@ from xdataforge import XDataForge
 
 
 def main():
-    client = XDataForge(base_url="http://39.105.188.185:8081", token="sk_LuCzQrjA0KRbakKYySc6QTiEp5gTUhN2", )
+    client = XDataForge(base_url="http://39.105.188.185:8081", api_token="sk_LuCzQrjA0KRbakKYySc6QTiEp5gTUhN2" )
     # setup client, fetch or create run
     client.setup("Advanced Generation for Arithmetic Expressions", "Regression Test",run_id="RUN-1720945462-Ryr5rT")
     print(client.run_id)

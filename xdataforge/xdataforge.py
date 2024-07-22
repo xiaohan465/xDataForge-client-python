@@ -15,8 +15,8 @@ class XDataForge:
     plan: Plan
     run_id: str
 
-    def __init__(self, base_url: str, token: str):
-        self.api_client = APIClient(base_url, token)
+    def __init__(self, base_url: str, api_token: str):
+        self.api_client = APIClient(base_url, api_token)
 
     def setup(self, project_name: str, plan_name: str, run_id: str = ""):
         path = f'project/{project_name}'

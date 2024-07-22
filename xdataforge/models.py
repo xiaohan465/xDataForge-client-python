@@ -37,12 +37,10 @@ class Task:
     last_checkpoint_id: int
     api_client: APIClient
     current_datapoint: Optional[Datapoint] = None
-
     def fetch_next_datapoint(self) -> Datapoint:  # generator
         while True:
             try:
                 path = f'datapoint/{self.last_checkpoint_id}/next'
-                print(path)
                 datapoint = self.api_client.get(path, {"task_id": self.id})
                 self.last_checkpoint_id = datapoint['id']
                 self.current_datapoint = Datapoint(id=datapoint['id'], input=datapoint['input'])
