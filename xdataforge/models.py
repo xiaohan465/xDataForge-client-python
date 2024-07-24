@@ -34,20 +34,17 @@ class Datapoint:
 class Task:
     id: int
     dataset_id: int
-    last_checkpoint_id: int
+    last_datapoint_id: int
     api_client: APIClient
     current_datapoint: Optional[Datapoint] = None
-    def fetch_next_datapoint(self) -> Datapoint:  # generator
-        while True:
-            try:
-                path = f'datapoint/{self.last_checkpoint_id}/next'
-                datapoint = self.api_client.get(path, {"task_id": self.id})
-                self.last_checkpoint_id = datapoint['id']
-                self.current_datapoint = Datapoint(id=datapoint['id'], input=datapoint['input'])
 
-                yield self.current_datapoint
-            except Exception as e:
-                break
+    def fetch_next_datapoint(self) -> Datapoint:  # generator
+        while self.count_uncommitted_datapoints() > 0:
+            path = f'datapoint/{self.last_datapoint_id}/next'
+            datapoint = self.api_client.get(path, {"task_id": self.id})
+            self.last_datapoint_id = datapoint['id']
+            self.current_datapoint = Datapoint(id=datapoint['id'], input=datapoint['input'])
+            yield self.current_datapoint
 
     def commit_result(self, result: dict):
         if not isinstance(result, dict):
@@ -59,6 +56,11 @@ class Task:
                                  "output" : json.dumps(result),
                                  "input"  : json.dumps(self.current_datapoint.input)}
                              )
+
+    def count_uncommitted_datapoints(self):
+        path = f'task/{self.id}/datapoints/uncommitted'
+        count = self.api_client.get(path, {"datapoint_id": self.last_datapoint_id})
+        return count
 
 
 # todo update task status to done

@@ -39,7 +39,7 @@ class XDataForge:
     def fetch_tasks(self):
         path = f'run/{self.run_id}/tasks'
         tasks = self.api_client.get(path)['items']
-        return [Task(id=task['id'],dataset_id=task['checklist']['dataset']['id'],
-                     last_checkpoint_id=task['last_checkpoint_id'],api_client=self.api_client) for task in tasks]
+        return [Task(id=task['id'], dataset_id=task['checklist']['dataset']['id'],
+                     last_datapoint_id=task['last_checkpoint_id'], api_client=self.api_client) for task in tasks]
 
 
