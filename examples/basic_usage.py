@@ -2,7 +2,7 @@ from xdataforge import XDataForge
 
 
 def main():
-    client = XDataForge(base_url="http://39.105.188.185:8081", api_token="sk_iA9IRy2rRMLFpJJSgEld5DDv5bqx97fP")
+    client = XDataForge(api_token="sk_iA9IRy2rRMLFpJJSgEld5DDv5bqx97fP")
     # setup client, fetch or create run
     client.setup("test", "plan test")
     print(client.run_id)

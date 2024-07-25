@@ -15,7 +15,7 @@ class XDataForge:
     plan: Plan
     run_id: str
 
-    def __init__(self, base_url: str, api_token: str):
+    def __init__(self, api_token: str, base_url: str = 'https://api.xdataforge.com'):
         self.api_client = APIClient(base_url, api_token)
 
     def setup(self, project_name: str, plan_name: str, run_id: str = ""):
@@ -23,8 +23,8 @@ class XDataForge:
         project = self.api_client.get(path)
         self.project = Project(**project)
         path = f'plan/{plan_name}'
-        plan =  self.api_client.get(path, {'project_id': self.project.id})
-        self.plan = Plan(id=plan['id'],name=plan['name'])
+        plan = self.api_client.get(path, {'project_id': self.project.id})
+        self.plan = Plan(id=plan['id'], name=plan['name'])
         if run_id == "":
             run_id = self.create_run()
         self.run_id = run_id
@@ -41,5 +41,3 @@ class XDataForge:
         tasks = self.api_client.get(path)['items']
         return [Task(id=task['id'], dataset_id=task['checklist']['dataset']['id'],
                      last_datapoint_id=task['last_checkpoint_id'], api_client=self.api_client) for task in tasks]
-
-
