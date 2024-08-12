@@ -16,7 +16,7 @@ def main():
         for i, datapoint in enumerate(task.fetch_next_datapoint()):
             print(datapoint.input)
             # process
-            result = {f"index{j}": j for j in range(i + 1)}
+            result = {"index": i}
             print(result)
             task.commit_result(result)
 
